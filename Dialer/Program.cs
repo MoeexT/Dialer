@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dialer
 {
@@ -35,14 +31,11 @@ namespace Dialer
                 case "2":
                     dail.RunBat(); // 替换hosts
                     break;
-                case "3":
-
-                    break;
                 default:
                     string res = dail.Connect(connection, userName, password);
-                    if (res.IndexOf("已连接 鱼丸粗面a。") <= -1)
+                    if (res.IndexOf("已连接 " + userName + "。") <= -1)
                     {
-                        Console.WriteLine("拨号连接失败……");
+                        Console.WriteLine("拨号连接失败......");
                     }
                     System.Environment.Exit(0);
                     break;
@@ -50,9 +43,9 @@ namespace Dialer
         }
 
         public string Connect(string conn, string user, string passwd)
-            {
-                return Connection("rasdial " + conn + " " + user + " " + passwd + "&exit");
-            }
+        {
+            return Connection("rasdial " + conn + " " + user + " " + passwd + "&exit");
+        }
 
         public string DisConnect(string conn)
         {
@@ -62,7 +55,7 @@ namespace Dialer
         public void RunBat()
         {
             Process process = new Process();
-            process.StartInfo.FileName = "D:\\Sarmon\\Documents\\Codes\\windows_bat\\Windows自动替换脚本.bat";
+            process.StartInfo.FileName = "D:\\Users\\Teemo Nicolas\\Documents\\Progects\\windows_bat\\Windows自动替换脚本.bat";
             process.StartInfo.UseShellExecute = true;
             // process.StartInfo.Arguments = "hello world";
             process.StartInfo.CreateNoWindow = true;
