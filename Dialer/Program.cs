@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,82 @@ namespace Dialer
     {
         static void Main(string[] args)
         {
+            var dail = new Program();
+            var connection = "Teemo Nicolas";
+            var userName = "2015212605";
+            var password = "mq2020.";
+
+            Console.WriteLine("***牛逼的自动拨号系统***\n" +
+                "###牛逼的Hosts替换###\n" +
+                "0: 退出\n" +
+                "1: 断开\n" +
+                "2: 运行Hosts批处理\n" +
+                "其他: 拨号连接");
+            string choise = Console.ReadLine();
+
+            switch (choise)
+            {
+                case "0":
+                    System.Environment.Exit(0);
+                    break;
+                case "1":
+                    dail.DisConnect(connection);
+                    break;
+                case "2":
+                    dail.RunBat(); // 替换hosts
+                    break;
+                case "3":
+
+                    break;
+                default:
+                    string res = dail.Connect(connection, userName, password);
+                    if (res.IndexOf("已连接 鱼丸粗面a。") <= -1)
+                    {
+                        Console.WriteLine("拨号连接失败……");
+                    }
+                    System.Environment.Exit(0);
+                    break;
+            }
+        }
+
+        public string Connect(string conn, string user, string passwd)
+            {
+                return Connection("rasdial " + conn + " " + user + " " + passwd + "&exit");
+            }
+
+        public string DisConnect(string conn)
+        {
+            return Connection("rasdial " + conn + " /disconnect&exit");
+        }
+
+        public void RunBat()
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "D:\\Sarmon\\Documents\\Codes\\windows_bat\\Windows自动替换脚本.bat";
+            process.StartInfo.UseShellExecute = true;
+            // process.StartInfo.Arguments = "hello world";
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+            process.WaitForExit();
+        }
+
+        private string Connection(string dial)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardInput = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.CreateNoWindow = true;
+            p.Start();
+            p.StandardInput.WriteLine(dial);
+            p.StandardInput.AutoFlush = true;
+            string output = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            p.Close();
+            Console.WriteLine(output);
+            return output;
         }
     }
 }
