@@ -8,18 +8,17 @@ namespace Dialer
         static void Main(string[] args)
         {
             var dail = new Program();
-            var connection = "Teemo Nicolas";
+            var connection = "TeemoNicolas";
             var userName = "2015212605";
             var password = "mq2020.";
 
             Console.WriteLine("***牛逼的自动拨号系统***\n" +
-                "###牛逼的Hosts替换###\n" +
                 "0: 退出\n" +
                 "1: 断开\n" +
-                "2: 运行Hosts批处理\n" +
+                "2: 运行Hosts批处理（该功能暂时不可用）\n" +
                 "其他: 拨号连接");
-            string choise = Console.ReadLine();
 
+            string choise = Console.ReadLine();
             switch (choise)
             {
                 case "0":
@@ -29,14 +28,15 @@ namespace Dialer
                     dail.DisConnect(connection);
                     break;
                 case "2":
-                    dail.RunBat(); // 替换hosts
+                    dail.RunBat();  //替换hosts
                     break;
                 default:
                     string res = dail.Connect(connection, userName, password);
                     if (res.IndexOf("已连接 " + userName + "。") <= -1)
                     {
-                        Console.WriteLine("拨号连接失败......");
+                        Console.WriteLine("拨号连接成功...");
                     }
+                    //Console.ReadKey(); 等待输入任意字符
                     System.Environment.Exit(0);
                     break;
             }
